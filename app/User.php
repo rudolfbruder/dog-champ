@@ -41,4 +41,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Dog::class);
     }
+
+    public function awards()
+    {
+        return $this->hasMany(Award::class);
+    }
 }

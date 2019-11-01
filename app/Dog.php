@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Race;
 
 class Dog extends Model
 {
@@ -13,5 +14,10 @@ class Dog extends Model
     public function owner()
     {
         return $this->hasOne(User::class);
+    }
+
+    public function race()
+    {
+        return $this->belongsTo(Race::class);
     }
 }
