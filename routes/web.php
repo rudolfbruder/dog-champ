@@ -31,3 +31,4 @@ Route::get('/dogs/my-dogs', 'DogsController@myDogs')->name('dogs.my_dogs');
 Route::resource('dogs', 'DogsController');
 
 Route::get('/awards/my-awards', 'AwardsController@myAwards')->name('awards.my_awards');
+Route::resource('awards', 'AwardsController');

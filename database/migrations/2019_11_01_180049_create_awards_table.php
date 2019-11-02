@@ -19,7 +19,7 @@ class CreateAwardsTable extends Migration
             $table->integer('user_id');
             $table->integer('competition_id');
             $table->integer('award_type_id');
-            $table->dateTime('date');
+            $table->date('date');
             $table->text('comment');
             $table->timestamps();
         });

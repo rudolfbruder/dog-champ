@@ -1,0 +1,8 @@
+.breadcrumb-item a {
+    color: green;
+}
+
+/* select2 tags responsivness */
+.select2 {
+    width: 100% !important;
+}

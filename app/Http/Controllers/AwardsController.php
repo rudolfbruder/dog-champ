@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Award;
+use App\AwardType;
+use App\Competition;
+use App\Http\Requests\CreateAwardRequest;
 use Illuminate\Http\Request;
 
 class AwardsController extends Controller
@@ -15,6 +18,7 @@ class AwardsController extends Controller
     public function index()
     {
         //
+        return view('awards.index');
     }
 
     /**
@@ -25,6 +29,10 @@ class AwardsController extends Controller
     public function create()
     {
         //
+        return view('awards.create')
+            ->withDogs(auth()->user()->dogs)
+            ->withAwardsTypes(AwardType::all())
+            ->withCompetitions(Competition::all());
     }
 
     /**
@@ -33,18 +41,32 @@ class AwardsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateAwardRequest $request)
     {
         //
+
+        Award::create([
+            'dog_id' => $request->dog_id,
+            'competition_id'  => $request->competition_id,
+            'award_type_id'  => $request->award_type_id,
+            'date'  => $request->date,
+            'comment' => $request->comment,
+            'user_id' => auth()->user()->id
+        ]);
+
+        $msg = 'Uspesne ste pridali nove ocenenie. Zoznam oceneni si viete prezried <a href="' . route('awards.my_awards') . '"> tu </a> ';
+        session()->flash('success',  $msg);
+
+        return redirect(route('awards.index'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Award  $award
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Award $award)
+    public function show($id)
     {
         //
     }
@@ -52,10 +74,10 @@ class AwardsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Award  $award
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Award $award)
+    public function edit($id)
     {
         //
     }
@@ -64,10 +86,10 @@ class AwardsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Award  $award
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Award $award)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -75,10 +97,10 @@ class AwardsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Award  $award
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Award $award)
+    public function destroy($id)
     {
         //
     }
@@ -86,6 +108,6 @@ class AwardsController extends Controller
     public function myAwards()
     {
         return view('awards.my_awards')
-            ->withAwards(auth()->user()->awards);
+            ->withAwards(auth()->user()->awards()->paginate(10));
     }
 }

@@ -18,7 +18,7 @@ class CreateComeptitionsTable extends Migration
             $table->string('continent');
             $table->string('country');
             $table->string('city');
-            $table->dateTime('date');
+            $table->date('date');
             $table->timestamps();
         });
     }

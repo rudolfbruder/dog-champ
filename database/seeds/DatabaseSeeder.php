@@ -15,5 +15,6 @@ class DatabaseSeeder extends Seeder
         $this->call(DogsTableSeeder::class);
         $this->call(RacesTableSeeder::class);
         $this->call(AwardsTableSeeder::class);
+        $this->call(CompetitionsTableSeeder::class);
     }
 }
